@@ -1,0 +1,89 @@
+/* ==========================================================================
+   Eindhoven Mapped — Typography tokens
+   Titles: TAN Headline (Fraunces fallback until licensed files are added)
+   Body:   Glacial Indifference
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Glacial Indifference';
+  src: url('/fonts/GlacialIndifference-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Glacial Indifference';
+  src: url('/fonts/GlacialIndifference-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Glacial Indifference';
+  src: url('/fonts/GlacialIndifference-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Glacial Indifference';
+  src: url('/fonts/GlacialIndifference-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Drop licensed TAN Headline files into /public/fonts to use the exact title face */
+@font-face {
+  font-family: 'TAN Headline';
+  src: url('/fonts/TANHeadline-Regular.woff2') format('woff2'),
+       url('/fonts/TANHeadline-Regular.woff') format('woff'),
+       url('/fonts/TANHeadline-Regular.otf') format('opentype');
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Families — titles + body only */
+  --font-display: 'TAN Headline', 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans:    'Glacial Indifference', system-ui, -apple-system, sans-serif;
+  --font-mono:    'Glacial Indifference', system-ui, -apple-system, sans-serif;
+
+  /* Type scale (px) */
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   18px;
+  --text-lg:   20px;
+  --text-xl:   24px;
+  --text-2xl:  30px;
+  --text-3xl:  38px;
+  --text-4xl:  48px;
+  --text-5xl:  64px;
+  --text-6xl:  82px;
+
+  /* Weights */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-extra:    800;
+
+  /* Line heights */
+  --leading-none:    1.0;
+  --leading-tight:   1.08;
+  --leading-snug:    1.2;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.65;
+
+  /* Letter spacing */
+  --tracking-tighter: -0.03em;
+  --tracking-tight:   -0.015em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.02em;
+  --tracking-caps:    0.08em;  /* eyebrows / overlines */
+}

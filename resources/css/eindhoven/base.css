@@ -1,0 +1,81 @@
+/* ==========================================================================
+   Eindhoven Mapped — Base element styles (scoped to .em-page)
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+.em-page {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-body);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.em-page h1, .em-page h2, .em-page h3, .em-page h4, .em-page h5 {
+  font-family: var(--font-display);
+  color: var(--text-strong);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.em-page p { margin: 0; text-wrap: pretty; }
+
+.em-page a { color: var(--text-link); text-decoration: none; }
+.em-page a:hover { color: var(--text-link); text-decoration: underline; }
+
+/* Nav + CTAs: red by default, orange on hover — beat the global link color */
+.em-page a.site-nav__link,
+.em-page a.site-nav__link.is-active { color: #D23430; text-decoration: none; }
+.em-page a.site-nav__link:hover,
+.em-page a.site-nav__link:focus,
+.em-page a.site-nav__link.is-active:hover,
+.em-page a.site-nav__link.is-active:focus { color: #FF6600; text-decoration: none; }
+
+.em-page a.site-logo:hover,
+.em-page a.site-logo:hover *,
+.em-page a.em-btn:hover,
+.em-page a.em-btn:hover *,
+.em-page a.site-nav__link:hover,
+.em-page a.site-nav__link:hover * { text-decoration: none; }
+.em-page a.em-btn--primary,
+.em-page a.em-btn--primary:hover,
+.em-page a.em-btn--primary:focus,
+.em-page a.em-btn--primary:active { color: #FFFFFF; text-decoration: none; }
+.em-page .site-footer a:hover,
+.em-page .site-footer a:hover * { text-decoration: none; }
+.em-page a.featured__card-link:hover,
+.em-page a.featured__card-link:hover *,
+.em-page a.em-card--interactive:hover,
+.em-page a.em-card--interactive:hover * {
+  text-decoration: none;
+}
+
+.em-page ::selection { background: var(--orange-200); color: var(--ink-950); }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.em-page :where(a, button, [tabindex]:not(input):not(select):not(textarea)):focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* Form controls: never add a second ring — wrappers/components own the border */
+.em-page :where(input, select, textarea):focus-visible {
+  outline: none;
+}

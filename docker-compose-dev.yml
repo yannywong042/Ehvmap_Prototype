@@ -1,0 +1,125 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: eindhoven-mapped-staging:latest
+    container_name: eindhoven_mapped_app_staging
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT}:80"
+    environment: &app-environment
+      APP_NAME: ${APP_NAME}
+      APP_ENV: ${APP_ENV}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_URL: ${APP_URL}
+      APP_KEY: ${APP_KEY}
+
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+
+      MAPBOX_TOKEN: ${MAPBOX_TOKEN}
+
+      # Queue + translation. The app dispatches story-translation jobs onto the
+      # database queue; the `queue` service below runs the worker that processes
+      # them. These have safe defaults so the stack still boots if a host's .env
+      # doesn't set them (translations simply no-op until DEEPL_API_KEY is set).
+      QUEUE_CONNECTION: ${QUEUE_CONNECTION:-database}
+      TRANSLATION_DRIVER: ${TRANSLATION_DRIVER:-null}
+      DEEPL_API_KEY: ${DEEPL_API_KEY:-}
+      DEEPL_API_URL: ${DEEPL_API_URL:-https://api-free.deepl.com}
+
+    volumes:
+      - ${HOST_APP_STORAGE_PATH}:/var/www/html/storage
+    command: >
+      bash -c "
+        php artisan migrate --force &&
+        php artisan storage:link --force &&
+        php artisan optimize &&
+        apache2-foreground
+      "
+    # Apache only starts once `migrate --force` above has finished, so a
+    # successful request to Laravel's /up endpoint is a reliable signal that the
+    # schema is ready. The `queue` service gates on this — without it the worker
+    # boots while migrations are still running and crash-loops on the missing
+    # `jobs`/`cache` tables.
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(@file_get_contents('http://127.0.0.1/up') === false ? 1 : 0);"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Background queue worker. Processes queued jobs — most importantly the story
+  # translation jobs, which are dispatched on submission and must run out of the
+  # request cycle. Reuses the app image and the exact same environment, and
+  # starts automatically with the stack (docker compose up). restart:
+  # unless-stopped plus --max-time recycle the worker so it always picks up new
+  # code/config after a deploy (a fresh container = fresh code, no stale worker).
+  queue:
+    # Same build as `app` so the image is always produced locally. Without a
+    # build section Compose treats `eindhoven-mapped-staging:latest` as a
+    # registry tag and any pulling deploy path (docker compose pull, Portainer's
+    # "re-pull image") fails, silently leaving the stack with no worker.
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: eindhoven-mapped-staging:latest
+    container_name: eindhoven_mapped_queue_staging
+    restart: unless-stopped
+    environment: *app-environment
+    volumes:
+      - ${HOST_APP_STORAGE_PATH}:/var/www/html/storage
+    # Run as www-data (not root) so any files the worker writes match the web
+    # server's user. --max-time recycles the process hourly; the container's
+    # restart policy brings it straight back with fresh code.
+    command: >
+      bash -c "su -s /bin/bash www-data -c 'php artisan queue:work --tries=3 --sleep=3 --max-time=3600 --backoff=10'"
+    depends_on:
+      db:
+        condition: service_healthy
+      # Wait for the app to have finished migrating before consuming jobs.
+      app:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    container_name: eindhoven_mapped_db_staging
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ${HOST_DB_DATA_PATH}:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${DB_USERNAME}", "-p${DB_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: eindhoven_mapped_pma_staging
+    restart: unless-stopped
+    ports:
+      # The outside port is controlled by Portainer, inside stays 80
+      - "${PMA_PORT}:80"
+    environment:
+      # Tell phpMyAdmin which database container to connect to
+      PMA_HOST: db
+      # Increase upload limits just in case you need to import a large database backup later
+      UPLOAD_LIMIT: 300M
+    depends_on:
+      - db

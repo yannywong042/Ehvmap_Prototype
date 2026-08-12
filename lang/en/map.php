@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'search_placeholder' => 'Search by neighbourhood or keyword...',
+    'all_categories' => 'All categories',
+    'filter_label' => 'Filter',
+    'clear_filters' => 'Clear filters',
+    'result_count' => ':count experiences',
+    'no_results' => 'No experiences found.',
+    'back_to_map' => 'Back to the map',
+    'read_story' => 'Read the story',
+    'close' => 'Close',
+    'toggle_filters' => 'Toggle filters',
+    'save' => 'Save',
+    'share' => 'Share',
+    'share_experience' => 'Share an experience',
+    'loading' => 'Loading...',
+    'map_load_error' => 'Unable to load the map right now. Please try again.',
+    'neighbourhood_label' => 'Neighbourhood',
+    'all_neighbourhoods' => 'All neighbourhoods',
+    'neighbourhoods_unavailable' => 'Neighbourhood data is unavailable right now. Showing all experiences instead.',
+    'no_results_in_neighbourhood' => 'No experiences found in this neighbourhood yet.',
+    'translated_show_original' => 'Translated · show original',
+    'show_translation' => 'Show translation',
+    'translation_toggle_aria' => 'Switch between the translated and the original text of this story',
+    'carousel_label' => 'Experiences on the map',
+];

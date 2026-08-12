@@ -1,0 +1,111 @@
+/* ==========================================================================
+   Eindhoven Mapped — Color tokens
+   Warm paper canvas · signal-orange brand · map-category accents.
+   Brand locked to: red #D23430 · white #FFFFFF · orange #FF6600.
+   Base ramps first, then semantic aliases.
+   ========================================================================== */
+
+:root {
+  /* ---- Brand: orange + red (pressed) ---- */
+  --orange-50:  #FFF2EB;
+  --orange-100: #FFE0D0;
+  --orange-200: #FFC2A6;
+  --orange-300: #FF9D73;
+  --orange-400: #FF8533;
+  --orange-500: #FF6600;   /* primary */
+  --orange-600: #FF6600;   /* hover */
+  --orange-700: #D23430;   /* pressed → red */
+  --orange-800: #D23430;
+
+  /* ---- Ink: warm-tinted neutrals (paper-friendly greys) ---- */
+  --ink-950: #14130F;      /* strongest text / dark surface */
+  --ink-900: #1F1D17;
+  --ink-800: #2D2A23;
+  --ink-700: #46423A;
+  --ink-600: #5F5A4F;
+  --ink-500: #7D7868;
+  --ink-400: #A39E8E;
+  --ink-300: #C9C4B4;
+  --ink-200: #E5E0D3;
+  --ink-100: #EFEBE0;
+  --ink-50:  #F7F4EC;
+  --paper:   #FFFFFF;      /* pure white page canvas */
+  --white:   #FFFFFF;
+  --red:     #D23430;
+  --orange:  #FF6600;
+
+  /* ---- Map-category accents (also used as decorative accents) ---- */
+  --teal-500:  #1B9C84;    /* groen & natuur */
+  --teal-600:  #157A68;
+  --blue-500:  #2D72D9;    /* water & civic */
+  --blue-600:  #1F58B0;
+  --grape-500: #8A4FD0;    /* cultuur & kunst */
+  --grape-600: #6F38B0;
+  --pink-500:  #E0457B;    /* verhalen & mensen */
+  --pink-600:  #C12E63;
+  --amber-500: #F2A93B;    /* eten & markt */
+  --amber-600: #D58A1C;
+
+  /* ---- Semantic status ---- */
+  --green-500: #1B9C84;
+  --red-500:   #D23430;
+  --red-600:   #D23430;
+  --yellow-500:#F2A93B;
+
+  /* ===========================================================
+     SEMANTIC ALIASES — reference these in components
+     =========================================================== */
+
+  /* Text */
+  --text-strong:   var(--ink-950);
+  --text-body:     var(--ink-800);
+  --text-muted:    var(--ink-500);
+  --text-subtle:   var(--ink-400);
+  --text-on-dark:  var(--paper);
+  --text-on-brand: var(--white);
+  --text-link:     var(--red);
+
+  /* Surfaces */
+  --surface-page:   var(--paper);
+  --surface-card:   var(--white);
+  --surface-sunken: var(--ink-50);
+  --surface-raised: var(--white);
+  --surface-dark:   var(--ink-950);
+  --surface-inverse:var(--ink-900);
+  --surface-brand:  var(--orange-500);
+  --surface-brand-soft: var(--orange-50);
+
+  /* Borders */
+  --border-subtle:  var(--ink-200);
+  --border-default: var(--ink-300);
+  --border-strong:  var(--ink-400);
+  --border-brand:   var(--orange-500);
+  --border-dark:    var(--ink-800);
+
+  /* Brand actions */
+  --brand:          var(--orange-500);
+  --brand-hover:    var(--orange-600);
+  --brand-pressed:  var(--orange-700);
+  --brand-soft:     var(--orange-50);
+  --brand-soft-hover: var(--orange-100);
+
+  /* Focus */
+  --focus-ring: 0 0 0 3px rgba(255, 102, 0, 0.35);
+
+  /* Status */
+  --success: var(--green-500);
+  --success-soft: #E4F4EF;
+  --info:    var(--blue-500);
+  --info-soft: #E6EFFB;
+  --warning: var(--amber-500);
+  --warning-soft: #FCF1DD;
+  --danger:  var(--red-500);
+  --danger-soft: #FBE7E5;
+
+  /* Map */
+  --map-canvas:    #ECE9E1;   /* land */
+  --map-water:     #C9DCEB;
+  --map-road:      #FFFFFF;
+  --map-buurt-fill:rgba(255, 102, 0, 0.07);
+  --map-buurt-line:rgba(255, 102, 0, 0.45);
+}

@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'search_placeholder' => 'Zoek op wijk of trefwoord...',
+    'all_categories' => 'Alle categorieën',
+    'filter_label' => 'Filter',
+    'clear_filters' => 'Wis filters',
+    'result_count' => ':count ervaringen',
+    'no_results' => 'Geen ervaringen gevonden.',
+    'back_to_map' => 'Terug naar de kaart',
+    'read_story' => 'Lees het verhaal',
+    'close' => 'Sluiten',
+    'toggle_filters' => 'Filters tonen/verbergen',
+    'save' => 'Bewaren',
+    'share' => 'Delen',
+    'share_experience' => 'Deel een ervaring',
+    'loading' => 'Laden...',
+    'map_load_error' => 'De kaart kan nu niet geladen worden. Probeer het opnieuw.',
+    'neighbourhood_label' => 'Wijk',
+    'all_neighbourhoods' => 'Alle wijken',
+    'neighbourhoods_unavailable' => 'Wijkgegevens zijn momenteel niet beschikbaar. Alle ervaringen worden getoond.',
+    'no_results_in_neighbourhood' => 'Nog geen ervaringen gevonden in deze wijk.',
+    'translated_show_original' => 'Vertaald · toon origineel',
+    'show_translation' => 'Toon vertaling',
+    'translation_toggle_aria' => 'Wissel tussen de vertaalde en de originele tekst van dit verhaal',
+    'carousel_label' => 'Ervaringen op de kaart',
+];
